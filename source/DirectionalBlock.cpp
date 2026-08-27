@@ -41,7 +41,7 @@ ObjArg6: Color
 
 DirectionalBlock::DirectionalBlock(const char *pName) : LiveActor(pName) {
 
-    OSReport("constructor\n");
+    // OSReport("constructor\n");
     mStepSize = 100.0f;
     mMaxSteps = 5;
     mFalling = 0;
@@ -59,7 +59,7 @@ DirectionalBlock::~DirectionalBlock() { }
 
 void DirectionalBlock::init(const JMapInfoIter &rIter) {
 
-    OSReport("init\n");
+    // OSReport("init\n");
     MR::processInitFunction(this, rIter, false);
     MR::onCalcGravity(this);
     MR::connectToSceneMapObjStrongLight(this);
@@ -109,7 +109,7 @@ void DirectionalBlock::control() {
 }
 
 bool DirectionalBlock::receiveMsgPlayerAttack(u32 msg, HitSensor* pSender, HitSensor* pReceiver) {
-    OSReport("receiveMsgPlayerAttack\n");
+    // OSReport("receiveMsgPlayerAttack\n");
     if (MR::isMsgPlayerUpperPunch(msg)) {
         MR::sendArbitraryMsg(ACTMES_REFLECT_V, pSender, pReceiver);
         if (isNerve(&NrvDirectionalBlock::NrvWait::sInstance) && mCurrentStep < mMaxSteps) {
@@ -127,7 +127,8 @@ bool DirectionalBlock::receiveMsgPlayerAttack(u32 msg, HitSensor* pSender, HitSe
 
 void DirectionalBlock::exeWait() {
     if(MR::isFirstStep(this)) {
-        OSReport("wait\n");
+
+        //OSReport("wait\n");
         
         mVelocity.setAll(0);
         if (mRailRider != NULL) {
@@ -183,10 +184,10 @@ void DirectionalBlock::exeWait() {
 void DirectionalBlock::exeMove() {
     if (MR::isFirstStep(this)) {
 
-        OSReport("move\n");
+        // OSReport("move\n");
+
         mCurrentStep++;
         
-
         TVec3f upVec;
         MR::calcUpVec(&upVec, this);
         mVelocity = upVec * mStepSize / 5.0f;
@@ -218,9 +219,8 @@ void DirectionalBlock::exeFall() {
     MR::calcUpVec(&upVec, this);
     
     if (MR::isFirstStep(this)) {
-        OSReport("fall\n");
 
-        
+        //OSReport("fall\n");
 
         if (mStepSize >= 0.0f) {
             mVelocity = -upVec * mFallSpeed;
@@ -253,7 +253,8 @@ void DirectionalBlock::exeFall() {
 
 void DirectionalBlock::exeMoveRail() {
     if (MR::isFirstStep(this)) {
-        OSReport("move rail\n");
+
+        // OSReport("move rail\n");
         mCurrentStep++;
 
         mRailRider->setSpeed(mStepSize / 5.0f);
@@ -291,19 +292,20 @@ void DirectionalBlock::exeMoveRail() {
 void DirectionalBlock::exeFallRail() {
 
     if (MR::isFirstStep(this)) {
-        OSReport("fall rail\n");
+
+        // OSReport("fall rail\n");
 
         if (mStepSize >= 0.0f) {
             mRailRider->setSpeed(-mFallSpeed);
             mFallTime = ((mCurrentStep * mStepSize) / mFallSpeed);
             mFallSteps = (s32)mFallTime;
-            OSReport("fall time: %f, fall steps: %d\n", mFallTime, mFallSteps);
+            // OSReport("fall time: %f, fall steps: %d\n", mFallTime, mFallSteps);
         }
         else {
             mRailRider->setSpeed(mFallSpeed);
             mFallTime = (mCurrentStep * -mStepSize / mFallSpeed);
             mFallSteps = (s32)mFallTime;
-            OSReport("fall time: %f, fall steps: %d\n", mFallTime, mFallSteps);
+            // OSReport("fall time: %f, fall steps: %d\n", mFallTime, mFallSteps);
         }
 
         MR::startActionSound(this, "OjBlockFall", -1, -1, -1);
