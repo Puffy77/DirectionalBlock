@@ -1,0 +1,20 @@
+{
+  "Name": "DirectionalBlock",
+  "Author": "Puffy",
+  "Description": "The Directional Block from Super Mario 3D Land!",
+  "InstallDependencies": ["Syati_ObjectFactories", "Syati_Init", "PTUtils"],
+  "SupportedGames": [
+    "SB4"
+  ],
+  "ModuleData" : [
+    {
+      "NameObjFactory" : [
+        {
+          "Name" : "DirectionalBlock",
+          "Function" : "createExtActor<DirectionalBlock>",
+          "Include" : "DirectionalBlock.h"
+        }
+      ]
+    }
+  ]
+}
