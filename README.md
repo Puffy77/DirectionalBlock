@@ -36,7 +36,7 @@ If path ID is set, hitting the block will instead move it along the path.
 | 10 | Black |
 | 11 | Gray* |
 
-*Not reccomended, as its used to show when the block has reached the maximum number of steps.
+*Not recommended, as its used to show when the block has reached the maximum number of steps.
 
 ## Switches
 | Switch | Type | Description |
